@@ -17,6 +17,25 @@ export interface GeneratedImage {
   revisedPrompt?: string;
 }
 
+// Helper function to enhance prompts with relevant context
+export const enhancePromptForPouf = (prompt: string, options: { 
+  material?: string, 
+  color?: string, 
+  size?: string,
+  style?: string
+}) => {
+  const { material, color, size, style } = options;
+  
+  let enhancedPrompt = prompt;
+  
+  if (material) enhancedPrompt += `, مصنوع من ${material}`;
+  if (color) enhancedPrompt += `, بلون ${color}`;
+  if (size) enhancedPrompt += `, بحجم ${size}`;
+  if (style) enhancedPrompt += `, بتصميم ${style}`;
+  
+  return enhancedPrompt;
+};
+
 export const generateImage = async (params: GenerateImageParams): Promise<GeneratedImage | null> => {
   if (!OPENAI_API_KEY) {
     toast.error("OpenAI API key is not configured");
